@@ -2,22 +2,41 @@
   <div class="todo-container">
     <h1>TODO List</h1>
     <p>A place to store your todos</p>
-    <form class="form">
-      <input type="text" placeholder="Filter your to-dos" />
+    <form class="form" #filterForm="ngForm" (input)="setSearchTerm(filterForm)">
+      <label for="search">Search</label>
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Filter your to-dos"
+        ngModel
+      />
     </form>
     <ol class="list">
-      <li *ngFor="let todo of todos">
+      <li *ngFor="let todo of filter(); index as i">
         <div class="list-item">
-          <button class="btn" *ngIf="todo.completed === false">Complete</button>
+          <button
+            class="btn"
+            *ngIf="todo.completed === false"
+            (click)="completeTask(i)"
+          >
+            Complete
+          </button>
           <p class="task" [ngClass]="{ done: todo.completed }">
             {{ todo.task }}
           </p>
-          <button class="x-btn">X</button>
+          <button class="x-btn" (click)="removeTask(i)">X</button>
         </div>
       </li>
     </ol>
-    <form class="form">
-      <input type="text" placeholder="Add your to-do" />
+    <form class="form" #addForm="ngForm" (ngSubmit)="addTask(addForm)">
+      <input
+        type="text"
+        id="task"
+        name="task"
+        placeholder="Add your to-do"
+        ngModel
+      />
       <button class="add">Add</button>
     </form>
   </div>
