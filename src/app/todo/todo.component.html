@@ -3,7 +3,6 @@
     <h1>TODO List</h1>
     <p>A place to store your todos</p>
     <form class="form" #filterForm="ngForm" (input)="setSearchTerm(filterForm)">
-      <label for="search">Search</label>
       <input
         type="text"
         name="search"
@@ -12,6 +11,7 @@
         ngModel
       />
     </form>
+    <p *ngIf="todos.length === 0">Enter some todos</p>
     <ol class="list">
       <li *ngFor="let todo of filter(); index as i">
         <div class="list-item">
@@ -22,9 +22,27 @@
           >
             Complete
           </button>
-          <p class="task" [ngClass]="{ done: todo.completed }">
+          <p
+            *ngIf="showIndex !== i"
+            class="task"
+            [ngClass]="{ done: todo.completed }"
+            (click)="setShowIndex(i)"
+          >
             {{ todo.task }}
           </p>
+          <!-- Two way data binding -->
+          <form
+            *ngIf="showIndex === i"
+            (ngSubmit)="resetShowIndex()"
+            class="update-form"
+          >
+            <input
+              class="update-form"
+              type="text"
+              name="update"
+              [(ngModel)]="todo.task"
+            />
+          </form>
           <button class="x-btn" (click)="removeTask(i)">X</button>
         </div>
       </li>

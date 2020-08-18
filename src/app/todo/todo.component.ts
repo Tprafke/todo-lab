@@ -28,7 +28,17 @@ export class TodoComponent implements OnInit {
   ];
   searchTerm: string;
 
+  showIndex: number;
+
   constructor() {}
+
+  setShowIndex(index: number) {
+    this.showIndex = index;
+  }
+
+  resetShowIndex() {
+    this.showIndex = undefined;
+  }
 
   addTask(form: NgForm) {
     let newTodo: Todo = {

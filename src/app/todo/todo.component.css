@@ -31,6 +31,10 @@
 .task {
   flex: 1;
 }
+.update-form {
+  display: flex;
+  flex: 1;
+}
 
 .btn {
   background-color: white;
